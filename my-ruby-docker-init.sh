@@ -19,12 +19,10 @@ touch ./${APP_HOME#/}/Gemfile.lock
 # dockerをbuild
 docker-compose build
 
-# bundleのinstall(最初にこれしないとエラー吐くんだ...対処法がいまいちわからん)
+# railsプロジェクトの作成 
+docker-compose run --rm web rails new . --force --database=${DATABASE} 
+
 docker-compose run --rm web bundle install
-
-# railsプロジェクトの作成
-docker-compose run --rm web rails new . --force --database=${DATABASE} --skip-bundle
-
 # database.ymlをプロジェクトのものに差し替え
 cp -f database.yml ./${APP_HOME#/}/config/database.yml
 
